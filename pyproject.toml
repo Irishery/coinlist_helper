@@ -11,6 +11,9 @@ alembic = "^1.7.6"
 Flask-SQLAlchemy = "^2.5.1"
 configparser = "^5.2.0"
 Flask-Migrate = "^3.1.0"
+Flask-Script = "^2.0.6"
+psycopg2 = "^2.9.3"
+python-dotenv = "^0.19.2"
 
 [tool.poetry.dev-dependencies]
 
