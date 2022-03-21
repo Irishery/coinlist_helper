@@ -1,0 +1,9 @@
+a, a:hover, a:focus, a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+.auth_box {
+    padding-top: 5%;
+    padding-bottom: 5%;
+}

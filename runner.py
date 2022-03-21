@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = create_app(os.getenv('FLASK_ENV') or 'config.DevelopementConfig')
+app.debug = True
 # manager = Manager(app)
 
 def make_shell_context():
@@ -17,4 +18,4 @@ def make_shell_context():
 # manager.add_command('db', MigrateCommand)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
