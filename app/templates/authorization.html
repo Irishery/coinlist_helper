@@ -2,10 +2,18 @@
 {% block content %}
 
 <div class="d-flex justify-content-center auth_box">
+    
     <form method="post">
         <div>
             {{ form.csrf_token }}
         </div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-danger">
+                {{ messages[0] }}. Go to <a class="alert-link" href="{{ url_for('auth.sign_in') }}">login page</a>.
+            </div>
+        {% endif %}
+        {% endwith %}
         {% for field in form if field.name != 'csrf_token' %}
             <div class="mb-3">
                 {% if not(field.type == "SubmitField") %}
@@ -14,7 +22,9 @@
                 
                 {% if field.type == "StringField" and field.id == "password" %}
                 {{ field(class_="form-control", type_="password") }}
-
+        
+                {% elif field.type == "BooleanField" %}
+                {{ field(class_="form-check-input") }}
 
                 {% elif field.type == "SubmitField" %}
                 {{ field(class_="btn btn-primary") }}

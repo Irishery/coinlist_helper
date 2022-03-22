@@ -1,6 +1,11 @@
+from email.policy import default
 from sqlalchemy.dialects.postgresql import JSON
-from flask_rbac import UserMixin, RoleMixin
-from app import db, login_manager
+from flask_rbac import RoleMixin, UserMixin
+from dataclasses import dataclass
+# from datetime import 
+# from flask_login import UserMixin
+from sqlalchemy import text
+from app import db, login_manager, rbac
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -42,6 +47,13 @@ class Role(db.Model, RoleMixin):
 
     @staticmethod
     def get_by_name(name):
+        # query = f"select * from role where name = '{name}'"
+        # print('AAAAAAAAAAAAAAAAAAAAAA')
+        # print(type(name))
+        # res = db.session.execute(text(query)).first()
+        # role_res = Role(res.name, res.description)
+        # print(res.name)
+        # return role_res
         return Role.query.filter_by(name=name).first()
 
 
@@ -53,24 +65,27 @@ users_roles = db.Table(
                                      primary_key=True)
 )
 
+rbac.set_role_model(Role)
 
+
+@dataclass
 class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    platform = db.Column(db.String(255), nullable=False)
-    name = db.Column(db.String(255), nullable=False)
-    login = db.Column(db.String(255), unique=True, nullable=False)
-    password = db.Column(db.String(255), nullable=False)
-    cookie = db.Column(JSON)
-    info = db.Column(db.String(255))
-    proxy_host = db.Column(db.String(255))
-    proxy_port = db.Column(db.String(255))
-    proxy_login = db.Column(db.String(255))
-    proxy_pass = db.Column(db.String(255))
-    user_agent = db.Column(db.String(255))
-    unmasked_vendor = db.Column(db.String(255))
-    unmasked_renderer = db.Column(db.String(255))
-    resolution = db.Column(db.String(255))
-    last_enter = db.Column(db.DateTime(timezone=True), nullable=False)
+    id: int = db.Column(db.Integer, primary_key=True)
+    platform: str = db.Column(db.String(255), nullable=False)
+    name: str = db.Column(db.String(255), nullable=False)
+    login: str = db.Column(db.String(255), unique=True, nullable=False)
+    password: str = db.Column(db.String(255), nullable=False)
+    cookie: dict = db.Column(JSON)
+    info: str = db.Column(db.String(255))
+    proxy_host: str = db.Column(db.String(255))
+    proxy_port: str = db.Column(db.String(255))
+    proxy_login: str = db.Column(db.String(255))
+    proxy_pass: str = db.Column(db.String(255))
+    user_agent: str = db.Column(db.String(255))
+    unmasked_vendor: str = db.Column(db.String(255))
+    unmasked_renderer: str = db.Column(db.String(255))
+    resolution: str = db.Column(db.String(255))
+    last_enter: datetime = db.Column(db.DateTime(timezone=True), nullable=False)
 
     roles = db.relationship(
         'Role',
@@ -90,6 +105,21 @@ class User(db.Model, UserMixin):
             self.set_password(password)
 
         self.last_enter = last_enter
+    
+    @property
+    def is_active(self):
+        return True
+    
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return str(self.id)
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -109,6 +139,8 @@ class User(db.Model, UserMixin):
             yield role
 
 
+rbac.set_user_model(User)
+
 @login_manager.user_loader
 def load_user(user_id):
-    return db.session.query(User).get(user_id)
+    return User.query.get(int(user_id))
