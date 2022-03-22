@@ -33,7 +33,8 @@ def create_app(config):
     app.register_blueprint(auth_route)
     app.register_blueprint(main_route)
 
-    from app.api.user_api import UserApi
-    api.add_resource(UserApi, '/users/<int:id>')
+    from app.api.user_api import user_api
+    app.register_blueprint(user_api)
+    # api.add_resource(UserApi, '/users/<int:id>')
 
     return app

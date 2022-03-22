@@ -1,8 +1,137 @@
 {% extends "base.html" %}
+
 {% block content %}
-<div class="d-flex justify-content-center">
-    <span class="d-inline-block text-truncate" style="max-width: 150px;">
-        Praeterea iter est quasdam res quas ex communi.
-      </span>
+<!-- Navigation -->
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+  <div class="nav-inner container px-4 px-lg-4">
+  <a class="navbar-brand" href="#">
+    BootstrapBay
+  </a>
+  <div class="btn" id="navbar-list-4">
+    <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img id="navbarDropdownMenuImg" src="https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8=" width="40" height="40" class="rounded-circle">
+        </a>
+        <div id="dropdown-profile" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/profile">Profile</a>
+          <a class="dropdown-item" href="/logout">Log Out</a>
+        </div>
+      </li>   
+    </ul>
+  </div>
 </div>
+</nav>
+<!-- Header -->
+<header class="bg-light py-2">
+  <div class="container px-4 px-lg-4 my-2">
+      <div class="d-flex justify-content-between">
+        <div class="start-all-checked">
+          <button type="button" class="btn start-checked-btn btn-dark">
+            Start up checked
+          </button>
+        </div>
+        <div class="btn-update">
+          <button type="button"  onClick="window.location.reload();" class="btn btn-dark">
+            Update
+          </button>
+        </div>
+      </div>
+  </div>
+</header>
+<!-- Section -->
+<section class="py-3 px-lg-4">
+  <div class="container px-4">
+    <div class="row">
+      
+      <table id="bots" class="table align-middle table-striped table-bordered" cellspacing="0" width="100%">
+        <thead class="table-dark">
+          <tr>
+            <th>
+              <input type="checkbox" class="select-all checkbox" name="select-all" value="1000" />
+            </th>
+            <th>Start</th>
+            <th>Name</th>
+            <th>Platform</th>
+            <th>Login</th>
+            <th>Info</th>
+            <th>Proxy_host</th>
+            <th>Proxy_port</th>
+            <th>Proxy_login</th>
+            <th>Proxy_pass</th>
+            <th>User_agent</th>
+            <th>Unmasked_vendor</th>
+            <th>Unmasked_renderer</th>
+            <th>Resolution</th>
+          </tr>
+        </thead>
+        <tfoot class="table-dark">
+          <tr>
+            <th></th>
+            <th>Start</th>
+            <th>Name</th>
+            <th>Platform</th>
+            <th>Login</th>
+            <th>Info</th>
+            <th>Proxy_host</th>
+            <th>Proxy_port</th>
+            <th>Proxy_login</th>
+            <th>Proxy_pass</th>
+            <th>User_agent</th>
+            <th>Unmasked_vendor</th>
+            <th>Unmasked_renderer</th>
+            <th>Resolution</th>
+          </tr>
+        </tfoot>
+        <tbody>
+            {% for user in users %}
+            <tr>
+              <td class="active">
+                <input type="checkbox" class="select-item checkbox" name="select-item" value="{{ user.id }}" />
+              </td>
+              <td>
+                <button type="button" class="btn btn-dark btn-sm" value="{{ user.id }}">Start_up</button>
+              </td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.platform }}</td>
+              <td>{{ user.login }}</td>
+              <td>{{ user.info }}</td>
+              <td>{{ user.proxy_host }}</td>
+              <td>{{ user.proxy_port }}</td>
+              <td>{{ user.proxy_login }}</td>
+              <td>{{ user.proxy_pass }}</td>
+              <td>{{ user.user_agent }}</td>
+              <td>{{ user.unmasked_vendor }}</td>
+              <td>{{ user.unmasked_renderer }}</td>
+              <td>{{ user.resolution }}</td>
+            </tr>
+          {% endfor %}
+     
+        </tbody>
+      </table>
+  
+    </div>
+
+  </div>
+</section>
 {% endblock %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function() {
+        $("#bots").DataTable({
+            "scrollX": true
+        });
+        $('.dataTables_length').addClass('bs-select');
+        
+        $('.dataTables_filter').css({display: "flex"});
+        $('.dataTables_filter').addClass('justify-content-end');
+
+        $('.pagination').addClass('justify-content-end');
+
+      });
+
+  </script>
+  <script src="../static/js/profiletoggler.js"></script>
+  <script src="../static/js/checkbox-selection.js"></script>
+  {% endblock %}

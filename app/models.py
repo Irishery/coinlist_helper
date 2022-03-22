@@ -2,7 +2,6 @@ from email.policy import default
 from sqlalchemy.dialects.postgresql import JSON
 from flask_rbac import RoleMixin, UserMixin
 from dataclasses import dataclass
-# from datetime import 
 # from flask_login import UserMixin
 from sqlalchemy import text
 from app import db, login_manager, rbac
@@ -47,13 +46,6 @@ class Role(db.Model, RoleMixin):
 
     @staticmethod
     def get_by_name(name):
-        # query = f"select * from role where name = '{name}'"
-        # print('AAAAAAAAAAAAAAAAAAAAAA')
-        # print(type(name))
-        # res = db.session.execute(text(query)).first()
-        # role_res = Role(res.name, res.description)
-        # print(res.name)
-        # return role_res
         return Role.query.filter_by(name=name).first()
 
 
@@ -137,7 +129,7 @@ class User(db.Model, UserMixin):
     def get_roles(self):
         for role in self.roles:
             yield role
-
+    
 
 rbac.set_user_model(User)
 

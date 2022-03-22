@@ -25,7 +25,7 @@ def sign_up():
             db.session.add(user)
             db.session.commit()
 
-            return redirect(url_for("main_route.profile"))
+            return redirect(url_for("main_route.main"))
     return render_template("authorization.html", title="authorization",
                                                  form=form, action="sign_up")
 
@@ -38,10 +38,10 @@ def sign_in():
             if not user or not check_password_hash(user.password,
                                                          form.password.data):
                 flash("Login or password is incorrect")
-                return redirect(url_for('auth.sign_up'))
+                return redirect(url_for('auth.sign_in'))
             
             login_user(user, remember=form.remember.data)
-            return redirect(url_for("main_route.profile"))
+            return redirect(url_for("main_route.main"))
     return render_template("authorization.html", title="authorization",
                                                  form=form, action="sign_in")
 
@@ -50,7 +50,7 @@ def sign_in():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("main.index"))
+    return redirect(url_for("main_route.main"))
 
 
 # if request.method == "POST":
