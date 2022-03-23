@@ -20,7 +20,7 @@ def create_app(config):
     api = Api(app)
 
     db.init_app(app)
-    login_manager.login_view = "auth.sign_up"
+    login_manager.login_view = "auth.sign_in"
     login_manager.init_app(app)
     migrate.init_app(app, db)
 

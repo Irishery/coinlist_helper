@@ -1,18 +1,3 @@
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.navbar {
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-.navbar-nav .dropdown-menu {
-    right: 0%;
-    position: absolute;
-}
-
 .btn-update {
   align-self: center;
 }

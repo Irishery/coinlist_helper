@@ -51,20 +51,3 @@ def sign_in():
 def logout():
     logout_user()
     return redirect(url_for("main_route.main"))
-
-
-# if request.method == "POST":
-#         if form.validate_on_submit():
-#             user = User(platform=form.platform.data, name=form.name.data,
-#                         login=form.login.data, password=form.password.data)
-#             login_user(user)
-
-#             flash("Logged in successfully.")
-            
-#             next = request.args.get("next")
-#             if not is_safe_url(next):
-#                 return abort(400)
-
-#         return redirect(next or url_for("/"))
-#     return render_template("authorization.html", title="authorization",
-#                                                  form=form, action="sign_up")
