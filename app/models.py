@@ -1,4 +1,3 @@
-from email.policy import default
 from sqlalchemy.dialects.postgresql import JSON
 from dataclasses import dataclass
 from flask_login import UserMixin

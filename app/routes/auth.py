@@ -18,6 +18,10 @@ def sign_up():
             if check_login:
                 flash('Login already exists')
                 return redirect(url_for('auth.sign_up'))
+            
+            if len(form.password.data) < 3:
+                flash('The password is too short')
+                return redirect(url_for('auth.sign_up'))
 
             user = User(platform=form.platform.data, name=form.name.data,
                         login=form.login.data, password=form.password.data)

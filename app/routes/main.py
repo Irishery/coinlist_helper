@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, request, url_for
 from flask_login import login_required, current_user
 from app.models import User
 from app.forms.edit_data import EditProfile
@@ -20,8 +20,14 @@ def table():
 
 @main_route.route("/profile", methods=["GET", "POST"])
 @login_required
-def profilex():
+def profile():
     form = EditProfile()
     cols = current_user.__mapper__.attrs.keys()[1:]
     return render_template("profile.html", cols=cols, user=current_user,
                                               form=form)
+
+@main_route.route("/profile", methods=["PUT"])
+@login_required
+def edit_profile():
+    print(request.args)
+    return redirect(url_for("main_route.profile"))
