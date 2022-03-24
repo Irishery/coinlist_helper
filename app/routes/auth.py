@@ -30,6 +30,8 @@ def sign_up():
             db.session.add(user)
             db.session.commit()
 
+            login_user(user)
+
             return redirect(url_for("main_route.main"))
     return render_template("authorization.html", title="authorization",
                                                  form=form, action="sign_up")
