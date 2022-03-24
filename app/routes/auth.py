@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from ..forms.authorization import SignUp, SignIn
-from flask_login import login_required, login_user, logout_user
-from ..models import User
-from app import db
+from flask_login import current_user, login_required, login_user, logout_user
+from ..models import User, Role
+from app import db, authorize
 from werkzeug.security import check_password_hash
 
 auth_route = Blueprint('auth', __name__)
@@ -21,7 +21,8 @@ def sign_up():
 
             user = User(platform=form.platform.data, name=form.name.data,
                         login=form.login.data, password=form.password.data)
-            
+            role = Role.query.filter_by(name='user').first()
+            user.roles.append(role)
             db.session.add(user)
             db.session.commit()
 

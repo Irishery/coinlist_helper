@@ -5,6 +5,11 @@ app_dir = os.path.abspath(os.path.dirname(__file__))
 class BaseConfig:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'A SECRET KEY'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    # LOGIN_DISABLED = True
+    USER_ENABLE_EMAIL = False      # Disable email authentication
+    USER_ENABLE_USERNAME = False    # Enable username authentication
+    USER_REQUIRE_RETYPE_PASSWORD = False    # Simplify register form
+    # USER_UNAUTHORIZED_ENDPOINT = '/sign_in'
 
 
 class DevelopementConfig(BaseConfig):

@@ -35,7 +35,9 @@ $(function(){
     $("input.select-all").click(function () {
         var checked = this.checked;
         $("input.select-item").each(function (index,item) {
-            item.checked = checked;
+            if (!item.disabled) {
+                item.checked = checked;
+            }
         });
     });
 

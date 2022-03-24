@@ -14,3 +14,15 @@
   display: flex;
   align-self: center;
 }
+
+th {
+  min-width: 120px;
+}
+
+th:nth-child(1) {
+  min-width: 0;
+}
+
+.edit-row {
+  display: none;
+}

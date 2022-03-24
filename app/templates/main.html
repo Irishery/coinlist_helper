@@ -23,6 +23,9 @@
   </div>
 </header>
 <!-- Section -->
+{% for user in users %}
+  <form method="post" id="{{ user.id }}"></form>
+{% endfor %}
 <section class="py-3 px-lg-4">
   <div class="container px-4">
     <div class="row">
@@ -33,7 +36,8 @@
             <th>
               <input type="checkbox" class="select-all checkbox" name="select-all" value="1000" />
             </th>
-            <th>Start</th>
+            <th>Edit</th>
+            <th>Action</th>
             <th>Name</th>
             <th>Platform</th>
             <th>Login</th>
@@ -51,7 +55,8 @@
         <tfoot class="table-dark">
           <tr>
             <th></th>
-            <th>Start</th>
+            <th>Edit</th>
+            <th>Action</th>
             <th>Name</th>
             <th>Platform</th>
             <th>Login</th>
@@ -73,7 +78,10 @@
                 <input type="checkbox" class="select-item checkbox" name="select-item" value="{{ user.id }}" />
               </td>
               <td>
-                <button type="button" class="btn btn-dark btn-sm" value="{{ user.id }}">Start_up</button>
+                <button type="button" id="edit-btn" class="btn btn-dark btn" value="{{ user.id }}">Edit</button>
+              </td>
+              <td>
+                <button type="button" class="btn btn-dark btn" value="{{ user.id }}">Start_up</button>
               </td>
               <td>{{ user.name }}</td>
               <td>{{ user.platform }}</td>
@@ -88,8 +96,33 @@
               <td>{{ user.unmasked_renderer }}</td>
               <td>{{ user.resolution }}</td>
             </tr>
-          {% endfor %}
-     
+            
+            <tr class="edit-row" id="edit-row{{ user.id }}">
+              <td class="active" id="{{ user.id }}">
+                <input type="checkbox" disabled="disabled" class="select-item checkbox" name="select-item" value="{{ user.id }}" />
+              </td>
+              <td>
+                <button id="save-changes" form="{{ user.id }}" type="submit" class="btn btn-dark btn" value="{{ user.id }}">Save</button>
+              </td>
+              <td>
+                <button id="cancel-editing" type="button" class="btn btn-danger" value="{{ user.id }}">Cancel</button>
+              </td>
+                <td><input form="{{ user.id }}" default="{{ user.name }}" value="{{ user.name }}" class="form-control"></td>
+                <td><input form="{{ user.id }}" default="{{ user.platform }}" value="{{ user.platform }}" class="form-control"></td>
+                <td><input form="{{ user.id }}" default="{{ user.login }}" value="{{ user.login }}" class="form-control"></td>
+                <td><input form="{{ user.id }}" default="{{ user.info }}" value="{{ user.info }}" class="form-control"></td>
+                <td><input form="{{ user.id }}" default="{{ user.proxy_host }}" value="{{ user.proxy_host }}" class="form-control"></td>
+                <td><input form="{{ user.id }}" default="{{ user.proxy_port }}" value="{{ user.proxy_port }}" class="form-control"></td>
+                <td><input form="{{ user.id }}" default="{{ user.proxy_login }}" value="{{ user.proxy_login }}" class="form-control"></td>
+                <td><input form="{{ user.id }}" default="{{ user.proxy_pass }}" value="{{ user.proxy_pass }}" class="form-control"></td>
+                <td><input form="{{ user.id }}" default="{{ user.user_agent }}" value="{{ user.user_agent }}" class="form-control"></td>
+                <td><input form="{{ user.id }}" default="{{ user.unmasked_vendor }}" value="{{ user.unmasked_vendor }}" class="form-control"></td>
+                <td><input form="{{ user.id }}" default="{{ user.unmasked_renderer }}" value="{{ user.unmasked_renderer }}" class="form-control"></td>
+                <td><input form="{{ user.id }}" default="{{ user.resolution }}" value="{{ user.resolution }}" class="form-control"></td>
+
+            </tr>
+          
+          {% endfor %}    
         </tbody>
       </table>
   
@@ -116,4 +149,5 @@
 
   </script>
   <script src="../static/js/checkbox-selection.js"></script>
+  <script src="../static/js/editrow-toggler.js"></script>
   {% endblock %}
