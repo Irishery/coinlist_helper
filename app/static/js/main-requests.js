@@ -1,12 +1,20 @@
 "use strict";
 
+
+
+// const edit = new Request('http://127.0.0.1:5000/api/selenium/?' + new URLSearchParams({
+//             action: 'ping',
+//             user_id: target.value
+// }));
+
 document.addEventListener('click', event => {
     target = event.target
     if (target.id == 'start_up') {
         const request = new Request('http://127.0.0.1:5000/api/selenium/?' + new URLSearchParams({
             action: 'ping',
             user_id: target.value
-        }));
+        }),
+        {method: 'PATCH'});
 
         const url = request.url;
 

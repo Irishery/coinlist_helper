@@ -48,3 +48,9 @@ def update_user():
 def start_up():
     data = request.args.to_dict()
     return {'response': 'pong to user with id ' + data['user_id']}
+
+
+@user_api.route('/api/selenium/', methods=["PATCH"])
+def edit_row():
+    data = request.args.to_dict()
+    return {'response': 'pong to user with id ' + data['user_id']}

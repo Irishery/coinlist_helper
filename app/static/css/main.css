@@ -22,7 +22,3 @@ th {
 th:nth-child(1) {
   min-width: 0;
 }
-
-.edit-row {
-  display: none;
-}
