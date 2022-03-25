@@ -30,12 +30,14 @@ document.addEventListener('click', async (event) => {
 
     if (target.id == 'edit-btn') {
         let edit_row = document.getElementById("show-info" + target.value)
-        console.log(edit_row)
+        let rows = document.getElementsByClassName("row" + target.value)
+        if (rows.length > 0) {
+          return
+        }
 
         user = await get_user(target.value)
-        console.log(user.login)
         edit_row.insertAdjacentHTML('afterend',
-        `<tr class="edit-row" id="edit-row${user.id}">
+        `<tr class="edit-row row${user.id}" id="edit-row${user.id}">
         <td class="active" id="${user.id}">
           <input type="checkbox" disabled="disabled" class="select-item checkbox" name="select-item" value="${user.id}" />
         </td>
