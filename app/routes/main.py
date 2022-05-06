@@ -1,3 +1,4 @@
+from crypt import methods
 from flask import Blueprint, render_template, redirect, request, url_for
 from flask_login import login_required, current_user
 from app.models import User
@@ -13,13 +14,13 @@ def base():
 @main_route.route("/main", methods=["GET", "POST"])
 @login_required
 def main():
-    data = request.form.to_dict()
-    print(data)
+    if request.method == 'POST':
+        data = request.form.to_dict()
 
-    db.session.query(User).\
-       filter(User.login == data['login']).\
-       update(data)
-    db.session.commit()
+        db.session.query(User).\
+            filter(User.login == data['login']).\
+        update(data)
+        db.session.commit()
 
     return render_template("main.html", title="coinlist", users=User.query.all())
 

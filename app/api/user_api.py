@@ -1,12 +1,11 @@
 from flask import Blueprint, jsonify, request
-from flask_restful import Resource
-from sqlalchemy import delete
-from collections import namedtuple
+import httpx
 from app import db
 from app.models import User, UserRole
 
 
 user_api = Blueprint('user_api', __name__)
+client = httpx.Client(timeout=None)
 
 
 @user_api.route('/api/user/', methods=["GET"])
@@ -36,10 +35,23 @@ def delete_user():
 @user_api.route('/api/selenium/', methods=["GET"])
 def start_up():
     data = request.args.to_dict()
-    return {'response': 'pong to user with id ' + data['user_id']}
+    print(data)
+    print('a')
+    r = client.request(
+            "get", "http://127.0.0.1:8181/worker/run",
+            params=data,
+            headers={'content-type': 'application/json'}
+    )
+
+    return {'responses': 'pong to user with id ' + data['user_id']}
 
 
 @user_api.route('/api/selenium/', methods=["PATCH"])
 def edit_row():
     data = request.args.to_dict()
+    r = client.request(
+        "get", "http://127.0.0.1:8181/worker/run/",
+        params=data,
+        headers={'content-type': 'application/json'}
+    )
     return {'response': 'pong to user with id ' + data['user_id']}
