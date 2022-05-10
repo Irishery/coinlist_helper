@@ -1,3 +1,4 @@
+from crypt import methods
 from flask import Blueprint, jsonify, request
 import httpx
 from app import db
@@ -55,3 +56,9 @@ def edit_row():
         headers={'content-type': 'application/json'}
     )
     return {'response': 'pong to user with id ' + data['user_id']}
+
+
+@user_api.route('/api/selenium/post_data', methods=['POST'])
+def get_worker_data():
+    data = request.args.to_dict()
+    print(data)
